@@ -1,0 +1,521 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bits Task",
+        "description": "Essa API é para gerenciar tarefas, criar, atualizar, deletar e ler.",
+        "contact": {
+            "name": "Support",
+            "email": "alexandrevianna511@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/user": {
+            "post": {
+                "description": "Cadastar um usuário",
+                "requestBody": {
+                    "description": "Dados necessários para cadastro de um usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestUser"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cadastro realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseUser"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Email já cadastrado"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Realizar o login do usuário para pegar o token de acesso",
+                "requestBody": {
+                    "description": "Dados necessários para realizar login de um usuário",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestLogin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseLogin"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email ou senha incorreto",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Email or password is incorrect"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task": {
+            "post": {
+                "description": "Criar uma nova tarefa",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados necessários para criar uma nova tarefa",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RequestTask"
+                            }
+                        }  
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarefa criada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTask"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro ao criar tarefa",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error creating a task"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            },
+            "get": {
+                "description": "Listar tarefas",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Página a ser buscada na filtragem",
+                        "type": "number",
+                        "format": "number"
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "Quantidade de tarefas retornadas na filtragem",
+                        "type": "number",
+                        "format": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseListTask"
+                                }
+                            }
+                        }  
+                    
+                    },
+                    "404":{
+                        "description": "Tarefas não encontradas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Tasks not found!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/task/{id}":{
+            "get": {
+                "description": "Buscar uma tarefa por ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da tarefa",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTask"
+                                }
+                            }  
+                        }
+                    },
+                    "404":{
+                        "description": "Tarefa não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualizar uma tarefas pelo ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da tarefa",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados necessários para atualizar uma tarefa",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "description": "Opcional",
+                                        "required": false,
+                                        "example": "Title da tarefa"
+                                    }, 
+                                    "content": {
+                                        "type": "string",
+                                        "description": "Opcional",
+                                        "required": false,
+                                        "example": "Conteúdo da tarefa"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Atualizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResponseTask"
+                                }
+                            }  
+                        }
+                    },
+                    "404":{
+                        "description": "Tarefa não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not fount!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+            },
+            "delete": {
+                "description": "Deletar uma tarefas pelo ID",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Id da tarefa",
+                        "required": true,
+                        "type": "number",
+                        "format": "number"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Tarefa deletada"
+                    },
+                    "404":{
+                        "description": "Tarefa não encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        }, 
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Task not found!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RequestUser": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do usuário",
+                        "example": "Alexandre Viana"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email do usuário",
+                        "example": "alexandre@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Senha do usuário",
+                        "example": "Umasenh@aleatoria"
+                    }
+                }
+            },
+            "ResponseUser": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "Id do usuário"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Nome do usuário",
+                        "example": "Alexandre Viana"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Email do usuário",
+                        "example": "alexandre@email.com"
+                    }
+                }
+            },
+            "RequestLogin": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "Email do usuário",
+                        "example": "alexandre@email.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Senha do usuário",
+                        "example": "Umasenh@aleatoria"
+                    }
+                }
+            }, 
+            "ResponseLogin": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "JWT",
+                        "description": "Token do usuário em JWT",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFseGV4eHhAZ2FtaWwuY29tIiwiaWF0IjoxNzA3OTY3NTI2LCJleHAiOjE3MDc5NzExMjYsInN1YiI6IjEifQ.HZKFFGscdpkXMs9sYnVrfqF-Nn9XttO36zlDuR0wIfM"
+                    }
+                }
+            },
+            "RequestTask": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Titulo da tarefa",
+                        "example": "Tirar o lixo"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Conteudo da tarefa",
+                        "example": "Você deve tirar o lixo e colocar na lixeira"
+                    }
+                }
+            },
+            "ResponseTask": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "description": "Id do usuário"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Titulo da tarefa",
+                        "example": "Esse é o titulo"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Conteudo da mensagem da tarefa",
+                        "example": "Esse é o conteúdo da mensagem"
+                    },
+                    "createdAt":{
+                        "type": "date",
+                        "description": "Data da criação da tarefa",
+                        "example": "2024-02-15T05:20:49.963Z"
+                    },
+                    "updatedAt": {
+                        "type": "date",
+                        "description": "Data da atualização da tarefa",
+                        "example": "2024-02-15T05:20:49.963Z"
+                    }
+                }
+            },
+            "ResponseListTask": {
+                "type": "object",
+                "properties": {
+                    "prevPage": {
+                        "type": "http",
+                        "description": "Url para a lista anterior de tarefas ",
+                        "example": "http://localhost:3000/task?page=2&perPage=5"
+                    },
+                    "nextPage": {
+                        "type": "http",
+                        "description": "Url para a próxima lista de tarefas",
+                        "example": "http://localhost:3000/task?page=4&perPage=5"
+                    },
+                    "currentPage": {
+                        "type": "number",
+                        "description": "Página atual",
+                        "example": "3"
+                    },
+                    "totalItens":  {
+                        "type": "number",
+                        "description": "Total de tarefas cadastradas",
+                        "example": "16"
+                    },
+                    "data":  {
+                        "type": "array",
+                        "description": "Array de tarefas",
+                        "items": {
+                            "$ref": "#/components/schemas/ResponseTask"
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "description": "Autenticação utilizando JWT",
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
