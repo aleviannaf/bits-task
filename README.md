@@ -61,7 +61,9 @@ A aplicação Bits Task estará disponível em http://localhost:3000 por padrão
 
 ### 6. Documentação da aplicação
 A documentação foi criada com swagger e redoc. Ela contem todos os endpoints da aplicação. Você poderá testar eles.
-A documentaçãp estará disponível na porta http://localhost:3000/docs 
+#### A documentaçãp com redoc estará disponível na porta http://localhost:3000/docs
+#### Também estará disponível com swagger http://localhost:3000/api-docs/
+
 
 
 
