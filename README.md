@@ -38,7 +38,7 @@ Certifique-se de que o Docker esteja em execução e execute o seguinte comando 
 
 docker-compose up -d
 ```
-Isso iniciará um contêiner PostgreSQL com as configurações fornecidas no arquivo docker-compose.yml.
+Isso Iniciará um contêiner PostgreSQL com as configurações fornecidas no arquivo docker-compose.yml.
 
 Depois de iniciado o docker composer, execute o seguinte código:
 
@@ -47,7 +47,7 @@ Depois de iniciado o docker composer, execute o seguinte código:
 npm run typeorm migration:generate src/migrations/InitialMigration -- -d src/data-source
 npm run typeorm migration:run -- -d src/data-source
 ```
-Isso criarar e executara a migration do typeorm.
+Isso vai criar e executar a migration do typeorm.
 
 ### 5. Inicializando a aplicação
 Após a configuração, inicie a aplicação com o seguinte comando:
