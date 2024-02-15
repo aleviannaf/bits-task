@@ -54,7 +54,8 @@ Após a configuração, inicie a aplicação com o seguinte comando:
 
 ```bash
 
-npm start
+npm run build
+npm run start
 ```
 A aplicação Bits Task estará disponível em http://localhost:3000 por padrão.
 
