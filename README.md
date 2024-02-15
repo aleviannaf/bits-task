@@ -37,8 +37,6 @@ Certifique-se de que o Docker esteja em execução e execute o seguinte comando 
 ```bash
 
 docker-compose up -d
-npm run typeorm migration:generate src/migrations/InitialMigration -- -d src/data-source
-npm run typeorm migration:run -- -d src/data-source
 ```
 Isso iniciará um contêiner PostgreSQL com as configurações fornecidas no arquivo docker-compose.yml.
 
