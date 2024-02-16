@@ -26,7 +26,7 @@ services:
       - postgres
     environment:
       - DATABASE_URL=postgresql://docker:docker@postgres:5432/bits
-    command: sh -c "npm install && npm run typeorm migration:run -- -d src/data-source && npm run start"
+    command: sh -c "npm install &&  npm run typeorm migration:run -- -d src/data-source && npm run build && npm run start"
 
 volumes:
   bits_pg_data:
