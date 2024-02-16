@@ -15,54 +15,27 @@ Certifique-se de ter o Node.js e o Docker Compose instalados em sua máquina ant
 Clone o repositório Bits Task para o seu ambiente local:
 
 ```bash
-
 git clone https://github.com/aleviannaf/bits-task.git
 cd bits-task
 ```
 
-### 2. Instalando as dependências
-Instale as dependências necessárias executando o seguinte comando no terminal:
+### 2. Inicializando a aplicação
+Execute o seguinte comando e aguarde instalar as dependências e executar a aplicação.
 
 ```bash
-
-npm install
-```
-
-### 3. Configurando o ambiente
-Nessa aplicação foi submetido um arquivo .env para usar no teste da execução da API
-
-### 4. Inicializando o banco de dados
-Certifique-se de que o Docker esteja em execução e execute o seguinte comando para iniciar o banco de dados:
-
-```bash
-
 docker-compose up -d
 ```
-Isso Iniciará um contêiner PostgreSQL com as configurações fornecidas no arquivo docker-compose.yml.
 
-Depois de iniciado o docker composer, execute o seguinte código:
+A aplicação Bits Task estará disponível em http://localhost:3000 por padrão, e o banco de dados estará rodando em http://localhost:5432.
 
-```bash
+### 3. Configurando o ambiente
+Neste contexto, um arquivo .env já configurado foi fornecido para facilitar o teste da execução da API.
 
-npm run typeorm migration:generate src/migrations/InitialMigration -- -d src/data-source
-npm run typeorm migration:run -- -d src/data-source
-```
-Isso vai criar e executar a migration do typeorm.
-
-### 5. Inicializando a aplicação
-Após a configuração, inicie a aplicação com o seguinte comando:
-
-```bash
-
-npm run build
-npm run start
-```
-A aplicação Bits Task estará disponível em http://localhost:3000 por padrão.
-
-### 6. Documentação da aplicação
-A documentação foi criada com swagger e redoc. Ela contem todos os endpoints da aplicação. Você poderá testar eles.
-#### A documentaçãp com redoc estará disponível na porta http://localhost:3000/docs
-#### Também estará disponível com swagger http://localhost:3000/api-docs/
+### 4. Documentação da aplicação
+A documentação foi criada com Swagger e ReDoc, contendo todos os endpoints da aplicação. Você poderá testá-los.
+#### A documentaçãp com ReDoc estará disponível na porta http://localhost:3000/docs
+#### A documentaçãp com Swagger estará disponível na porta http://localhost:3000/api-docs/
+#### Fica a critério qual agradar
 
 
 
